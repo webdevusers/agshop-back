@@ -107,4 +107,19 @@ router.get('/item/get/:id', async (req, res) => {
     res.status(500).json({status: 'Erorr', message: e})
   }
 })
+router.get('/item/random', async (req, res) => {
+  try {
+    // Используйте aggregate с $sample для выбора 4 случайных объектов
+    const randomItems = await Item.aggregate([
+      { $sample: { size: 4 } }
+    ]);
+
+    res.status(200).json(randomItems);
+
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ status: 'Error', message: e.message });
+  }
+});
+
 module.exports = router;
