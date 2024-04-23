@@ -3,7 +3,6 @@ const router = new Router();
 const Inventory = require("./inv.model");
 const Item = require("./item.model");
 
-// Inventory
 router.post("/inv/create", async (req, res) => {
   try {
     const { title } = req.body;
@@ -95,11 +94,11 @@ router.post("/item/create", async (req, res) => {
     console.log(e);
   }
 });
-router.get('/item/get/:id', async (req, res) => {
+router.get('/item/get/:link', async (req, res) => {
   try {
-    const {id} = req.params;
+    const {link} = req.params;
 
-    const item = await Item.findById(id);
+    const item = await Item.findOne({link});
 
     res.status(200).json(item)
 
